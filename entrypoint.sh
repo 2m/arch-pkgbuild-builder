@@ -11,9 +11,9 @@ case $target in
     pkgbuild)
         namcap PKGBUILD
         makepkg --syncdeps --noconfirm
-        namcap "${pkgname}-*"
-        pacman -Qip "${pkgname}-*"
-        pacman -Qlp "${pkgname}-*"
+        namcap "${pkgname}"-*
+        pacman -Qip "${pkgname}"-*
+        pacman -Qlp "${pkgname}"-*
         ;;
     srcinfo)
         makepkg --printsrcinfo | diff .SRCINFO - || \

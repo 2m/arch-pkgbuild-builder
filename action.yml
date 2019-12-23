@@ -1,5 +1,8 @@
 name: 'ArchLinux PKGBUILD builder action'
 description: 'Builds an validates PKGBUILD definition'
+branding:
+  icon: 'triangle'
+  color: 'blue'
 inputs:
   pkgname:
     description: 'The pkgname of the package to be validated'

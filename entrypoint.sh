@@ -3,6 +3,10 @@
 target=$1
 pkgbuild=$2
 
+# '/github/workspace' is mounted as a volume and has owner set to root
+# set the owner to the 'build' user, so it can access package files
+sudo chown build /github/workspace
+
 case $target in
     pkgbuild)
         namcap PKGBUILD

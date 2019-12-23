@@ -1,4 +1,4 @@
-# ArchLinux PKGBUILD builder action
+# Arch Linux PKGBUILD builder action
 
 This action builds an validates PKGBUILD definition.
 

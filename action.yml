@@ -1,4 +1,4 @@
-name: 'ArchLinux PKGBUILD builder action'
+name: 'Arch Linux PKGBUILD builder action'
 description: 'Builds an validates PKGBUILD definition'
 branding:
   icon: 'triangle'

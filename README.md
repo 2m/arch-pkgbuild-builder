@@ -29,3 +29,9 @@ with:
   target: 'srcinfo'
   pkgname: 'ucm-bin'
 ```
+
+## Used by
+
+So far this action is used by the following packages:
+
+* [ucm-bin](https://github.com/2m/ucm-bin-pkgbuild)

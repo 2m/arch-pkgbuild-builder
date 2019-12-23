@@ -5,7 +5,7 @@ pkgname=$2
 
 # '/github/workspace' is mounted as a volume and has owner set to root
 # set the owner to the 'build' user, so it can access package files
-sudo chown build /github/workspace
+sudo chown -R build /github/workspace
 
 # assumes that package files are in a subdirectory
 # of the same name as "pkgname", so this works well

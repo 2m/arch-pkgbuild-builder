@@ -1,7 +1,7 @@
 #!/bin/sh -l
 
 target=$1
-pkgbuild=$2
+pkgname=$2
 
 # '/github/workspace' is mounted as a volume and has owner set to root
 # set the owner to the 'build' user, so it can access package files
@@ -11,9 +11,9 @@ case $target in
     pkgbuild)
         namcap PKGBUILD
         makepkg --syncdeps --noconfirm
-        namcap "${pkgname}"-*
-        pacman -Qip "${pkgname}"-*
-        pacman -Qlp "${pkgname}"-*
+        namcap "${pkgname}-*"
+        pacman -Qip "${pkgname}-*"
+        pacman -Qlp "${pkgname}-*"
         ;;
     srcinfo)
         makepkg --printsrcinfo | diff .SRCINFO - || \

@@ -14,7 +14,7 @@ The `pkgname` of the package to be validated. Required for the `pkgbuild` target
 
 ## Example usage
 
-```
+```yml
 uses: 2m/arch-pkgbuild-builder@v1
 with:
   target: 'pkgbuild'

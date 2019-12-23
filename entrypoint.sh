@@ -7,6 +7,11 @@ pkgname=$2
 # set the owner to the 'build' user, so it can access package files
 sudo chown build /github/workspace
 
+# assumes that package files are in a subdirectory
+# of the same name as "pkgname", so this works well
+# with "aurpublish" tool
+cd "$pkgname"
+
 case $target in
     pkgbuild)
         namcap PKGBUILD

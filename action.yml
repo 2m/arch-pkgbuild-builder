@@ -1,0 +1,16 @@
+name: 'ArchLinux PKGBUILD builder action'
+description: 'Builds an validates PKGBUILD definition'
+inputs:
+  pkgname:
+    description: 'The pkgname of the package to be validated'
+    required: true
+  target:
+    description: 'Validation target. Can be one of: "pkgbuild", "srcinfo"'
+    required: true
+    default: 'pkgbuild'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.target }}
+    - ${{ inputs.pkgname }}

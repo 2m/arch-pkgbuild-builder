@@ -11,9 +11,13 @@ inputs:
     description: 'Validation target. Can be one of: "pkgbuild", "srcinfo"'
     required: true
     default: 'pkgbuild'
+  command:
+    description: 'Command to run after package installation'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.target }}
     - ${{ inputs.pkgname }}
+    - ${{ inputs.command }}

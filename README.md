@@ -10,7 +10,7 @@ This assumption is made so this action works well with [aurpublish].
 
 ### `target`
 
-**Required** Validation target. Can be one of: `pkgbuild`, `srcinfo`.
+**Required** Validation target. Can be one of: `pkgbuild`, `srcinfo`, `run`.
 
 ### `pkgname`
 
@@ -18,16 +18,38 @@ This assumption is made so this action works well with [aurpublish].
 
 ## Example usage
 
+### pkguild
+
+Verifies and builds the package.
+
 ```yml
 uses: 2m/arch-pkgbuild-builder@v1
 with:
   target: 'pkgbuild'
   pkgname: 'ucm-bin'
+```
 
+### srcinfo
+
+Verifies if the `.SRCINFO` is up to date with the `PKGBUILD`.
+
+```yml
 uses: 2m/arch-pkgbuild-builder@v1
 with:
   target: 'srcinfo'
   pkgname: 'ucm-bin'
+```
+
+### run
+
+Installs the package and runs a given `command`.
+
+```yml
+uses: 2m/arch-pkgbuild-builder@v1
+with:
+  target: 'run'
+  pkgname: 'ucm-bin'
+  command: `ucm --version`
 ```
 
 ## Used by

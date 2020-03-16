@@ -33,7 +33,7 @@ case $target in
     run)
         install_deps
         makepkg --syncdeps --noconfirm --install
-        exec "$command"
+        eval "$command"
         ;;
     srcinfo)
         makepkg --printsrcinfo | diff .SRCINFO - || \

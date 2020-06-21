@@ -1,24 +1,28 @@
 #!/bin/sh -l
 
 target=$1
-pkgname=$2
+pkgbuild=$2
 command=$3
-
-# '/github/workspace' is mounted as a volume and has owner set to root
-# set the owner to the 'build' user, so it can access package files
-sudo chown -R build /github/workspace /github/home
 
 # assumes that package files are in a subdirectory
 # of the same name as "pkgname", so this works well
 # with "aurpublish" tool
-cd "$pkgname" || exit
+
+pkgbuild_dir=$(dirname $(readlink $pkgbuild -f))
+cd $pkgbuild_dir || exit
+
+# '/github/workspace' is mounted as a volume and has owner set to root
+# set the owner to the 'build' user, so it can access package files
+sudo chown -R build $pkgbuild_dir
+
+pkgname=$(basename $pkgbuild_dir)
 
 install_deps() {
     # install make and regular package dependencies
     grep -E 'depends|makedepends' PKGBUILD | \
         sed -e 's/.*depends=//' -e 's/ /\n/g' | \
         tr -d "'" | tr -d "(" | tr -d ")" | \
-        xargs yay -S --noconfirm
+        xargs sudo yay -S --noconfirm
 }
 
 case $target in
@@ -27,8 +31,8 @@ case $target in
         install_deps
         makepkg --syncdeps --noconfirm
         namcap "${pkgname}"-*
-        pacman -Qip "${pkgname}"-*
-        pacman -Qlp "${pkgname}"-*
+        pacman -Qip "${pkgname}"-*.xz
+        pacman -Qlp "${pkgname}"-*.xz
         ;;
     run)
         install_deps

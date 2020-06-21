@@ -1,11 +1,13 @@
 name: 'Arch Linux PKGBUILD builder action'
 description: 'Builds an validates PKGBUILD definition'
+
 branding:
   icon: 'triangle'
   color: 'blue'
+
 inputs:
-  pkgname:
-    description: 'The pkgname of the package to be validated'
+  pkgbuild:
+    description: 'Path to file PKGBUILD. Assumes to be placed in a directory with the name of package, ie /path/to/pkgname'
     required: true
   target:
     description: 'Validation target. Can be one of: "pkgbuild", "srcinfo"'
@@ -14,10 +16,11 @@ inputs:
   command:
     description: 'Command to run after package installation'
     required: false
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.target }}
-    - ${{ inputs.pkgname }}
+    - ${{ inputs.pkgbuild }}
     - ${{ inputs.command }}

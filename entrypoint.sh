@@ -30,6 +30,9 @@ pkgbuild_dir=$(readlink $pkgname -f) # nicely cleans up path, ie. ///dsq/dqsdsq/
 # set the owner of $pkgbuild_dir  to the 'build' user, so it can access package files.
 sudo chown -R build $pkgbuild_dir
 
+# needs permissions so '/github/home/.config/yay' is accessible by yay
+sudo chown -R build /github/home
+
 cd $pkgbuild_dir
 
 pkgname="$(basename $pkgbuild_dir)" # keep quotes in case someone passes in a directory path with whitespaces...

@@ -39,7 +39,7 @@ install_deps() {
     grep -E 'depends|makedepends' PKGBUILD | \
         sed -e 's/.*depends=//' -e 's/ /\n/g' | \
         tr -d "'" | tr -d "(" | tr -d ")" | \
-        xargs sudo yay -S --noconfirm
+        xargs yay -S --noconfirm
 }
 
 case $target in

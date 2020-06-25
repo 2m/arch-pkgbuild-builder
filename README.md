@@ -52,8 +52,23 @@ with:
   command: `ucm --version`
 ```
 
+### debug mode (optional)
+
+Add a `debug: true` key, ie.
+
+ ```yml
+ uses: 2m/arch-pkgbuild-builder@v1
+ with:
+   debug: true
+   target: 'srcinfo'
+   pkgname: 'ucm-bin'
+ ```
+
+This will run `entrypoint.sh` with `set -x` on.
+
 ## Used by
 
 So far this action is used by the following packages:
 
 * [ucm-bin](https://github.com/2m/ucm-bin-pkgbuild)
+* [authenticator-rs](https://github.com/grumlimited/authenticator-rs)

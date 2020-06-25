@@ -6,8 +6,8 @@ branding:
   color: 'blue'
 
 inputs:
-  pkgbuild:
-    description: 'Path to file PKGBUILD. Assumes to be placed in a directory with the name of package, ie /path/to/pkgname'
+  pkgname:
+    description: 'Path to DIRECTORY where the PKGBUILD file is. Assumes the directory is the name of package, ie /path/to/pkgname/'
     required: true
   target:
     description: 'Validation target. Can be one of: "pkgbuild", "srcinfo"'
@@ -16,11 +16,15 @@ inputs:
   command:
     description: 'Command to run after package installation'
     required: false
+  debug:
+    description: 'Turns debugging on'
+    required: false
 
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.target }}
-    - ${{ inputs.pkgbuild }}
+    - ${{ inputs.pkgname }}
     - ${{ inputs.command }}
+    - ${{ inputs.debug }}

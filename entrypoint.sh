@@ -51,8 +51,9 @@ case $target in
         install_deps
         makepkg --syncdeps --noconfirm
         namcap "${pkgname}"-*
-        pacman -Qip "${pkgname}"-*.xz
-        pacman -Qlp "${pkgname}"-*.xz
+        source /etc/makepkg.conf # get PKGEXT
+        pacman -Qip "${pkgname}"-*"${PKGEXT}"
+        pacman -Qlp "${pkgname}"-*"${PKGEXT}"
         ;;
     run)
         install_deps

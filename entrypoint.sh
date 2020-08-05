@@ -1,5 +1,6 @@
 #!/bin/sh -l
 
+# fail whole script if any command fails
 set -e
 
 DEBUG=$4

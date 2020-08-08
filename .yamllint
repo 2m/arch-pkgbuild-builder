@@ -1,0 +1,6 @@
+---
+extends: default
+
+rules:
+  # Disable requirement for `---` at the beginning of each file
+  document-start: disable

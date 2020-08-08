@@ -14,7 +14,8 @@ This assumption is made so this action works well with [aurpublish].
 
 ### `pkgname`
 
-**Required** The `pkgname` of the package to be validated.
+**Required** Path to DIRECTORY where the PKGBUILD file is.
+Assumes the directory is the name of package, ie /path/to/pkgname/'
 
 ## Example usage
 

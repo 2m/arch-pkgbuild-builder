@@ -1,0 +1,21 @@
+---
+name: ci
+
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    name: Validate a Pull Request
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Run yamllint
+        uses: ibiqlik/action-yamllint@v1.0.0
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master

@@ -38,6 +38,10 @@ sudo chown -R build "$pkgbuild_dir"
 # needs permissions so '/github/home/.config/yay' is accessible by yay
 sudo chown -R build /github/home
 
+# use more reliable keyserver
+mkdir -p /github/home/.gnupg/
+echo "keyserver hkp://keyserver.ubuntu.com:80" | tee /github/home/.gnupg/gpg.conf
+
 cd "$pkgbuild_dir"
 
 pkgname="$(basename "$pkgbuild_dir")" # keep quotes in case someone passes in a directory path with whitespaces...

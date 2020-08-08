@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash
 
 # fail whole script if any command fails
 set -e
@@ -27,20 +27,20 @@ if [[ ! -e $pkgname/PKGBUILD ]]; then
     exit 1
 fi
 
-pkgbuild_dir=$(readlink $pkgname -f) # nicely cleans up path, ie. ///dsq/dqsdsq/my-package//// -> /dsq/dqsdsq/my-package
+pkgbuild_dir=$(readlink "$pkgname" -f) # nicely cleans up path, ie. ///dsq/dqsdsq/my-package//// -> /dsq/dqsdsq/my-package
 
 getfacl -p -R "$pkgbuild_dir" /github/home > /tmp/arch-pkgbuild-builder-permissions.bak
 
 # '/github/workspace' is mounted as a volume and has owner set to root
 # set the owner of $pkgbuild_dir  to the 'build' user, so it can access package files.
-sudo chown -R build $pkgbuild_dir
+sudo chown -R build "$pkgbuild_dir"
 
 # needs permissions so '/github/home/.config/yay' is accessible by yay
 sudo chown -R build /github/home
 
-cd $pkgbuild_dir
+cd "$pkgbuild_dir"
 
-pkgname="$(basename $pkgbuild_dir)" # keep quotes in case someone passes in a directory path with whitespaces...
+pkgname="$(basename "$pkgbuild_dir")" # keep quotes in case someone passes in a directory path with whitespaces...
 
 install_deps() {
     # install make and regular package dependencies
@@ -56,7 +56,10 @@ case $target in
         install_deps
         makepkg --syncdeps --noconfirm
         namcap "${pkgname}"-*
+
+        # shellcheck disable=SC1091
         source /etc/makepkg.conf # get PKGEXT
+
         pacman -Qip "${pkgname}"-*"${PKGEXT}"
         pacman -Qlp "${pkgname}"-*"${PKGEXT}"
         ;;

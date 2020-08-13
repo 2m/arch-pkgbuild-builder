@@ -1,5 +1,7 @@
 #!/bin/sh -l
 
+set -e
+
 DEBUG=$4
 
 if [[ -n $DEBUG  && $DEBUG = true ]]; then

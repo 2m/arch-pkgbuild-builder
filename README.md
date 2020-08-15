@@ -73,3 +73,4 @@ So far this action is used by the following packages:
 
 * [ucm-bin](https://github.com/2m/ucm-bin-pkgbuild)
 * [authenticator-rs](https://github.com/grumlimited/authenticator-rs)
+* [cpeditor](https://github.com/cpeditor/cpeditor)

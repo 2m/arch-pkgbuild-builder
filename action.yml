@@ -1,28 +1,34 @@
-name: 'Arch Linux PKGBUILD builder action'
-description: 'Builds an validates PKGBUILD definition'
+name: Arch Linux PKGBUILD builder action
+description: Builds an validates PKGBUILD definition
 
 branding:
-  icon: 'triangle'
-  color: 'blue'
+  icon: triangle
+  color: blue
 
 inputs:
   pkgname:
-    description: 'Path to DIRECTORY where the PKGBUILD file is. Assumes the directory is the name of package, ie /path/to/pkgname/'
+    description: >-
+      Path to DIRECTORY where the PKGBUILD file is.
+      Assumes the directory is the name of package, ie /path/to/pkgname/
     required: true
   target:
-    description: 'Validation target. Can be one of: "pkgbuild", "srcinfo"'
+    description: >-
+      Validation target.
+      Can be one of: "pkgbuild", "srcinfo", "run"
     required: true
     default: 'pkgbuild'
   command:
-    description: 'Command to run after package installation'
+    description: >-
+      Command to run after package installation.
+      Used when target=run
     required: false
   debug:
-    description: 'Turns debugging on'
+    description: Turns debugging on
     required: false
 
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: docker
+  image: Dockerfile
   args:
     - ${{ inputs.target }}
     - ${{ inputs.pkgname }}

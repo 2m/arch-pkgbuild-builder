@@ -24,7 +24,7 @@ Assumes the directory is the name of package, ie /path/to/pkgname/'
 Verifies and builds the package.
 
 ```yml
-uses: 2m/arch-pkgbuild-builder@v1
+uses: 2m/arch-pkgbuild-builder@v1.16
 with:
   target: 'pkgbuild'
   pkgname: 'ucm-bin'
@@ -35,7 +35,7 @@ with:
 Verifies if the `.SRCINFO` is up to date with the `PKGBUILD`.
 
 ```yml
-uses: 2m/arch-pkgbuild-builder@v1
+uses: 2m/arch-pkgbuild-builder@v1.16
 with:
   target: 'srcinfo'
   pkgname: 'ucm-bin'
@@ -46,7 +46,7 @@ with:
 Installs the package and runs a given `command`.
 
 ```yml
-uses: 2m/arch-pkgbuild-builder@v1
+uses: 2m/arch-pkgbuild-builder@v1.16
 with:
   target: 'run'
   pkgname: 'ucm-bin'
@@ -58,7 +58,7 @@ with:
 Add a `debug: true` key, ie.
 
  ```yml
- uses: 2m/arch-pkgbuild-builder@v1
+ uses: 2m/arch-pkgbuild-builder@v1.16
  with:
    debug: true
    target: 'srcinfo'

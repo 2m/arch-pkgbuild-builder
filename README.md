@@ -19,7 +19,7 @@ Assumes the directory is the name of package, ie /path/to/pkgname/'
 
 ## Example usage
 
-### pkguild
+### pkgbuild
 
 Verifies and builds the package.
 

@@ -12,10 +12,47 @@ jobs:
     runs-on: ubuntu-latest
     name: Validate a Pull Request
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2
 
       - name: Run yamllint
         uses: ibiqlik/action-yamllint@v3.0.2
 
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@master
+
+  test:
+    runs-on: ubuntu-latest
+    name: Test on project
+
+    strategy:
+      matrix:
+        include:
+          - repo-owner: 2m
+            repo-name: ucm-bin-pkgbuild
+            pkg-name: ucm-bin
+          - repo-owner: 2m
+            repo-name: paru-pkgbuild
+            pkg-name: .
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: action
+
+      - uses: actions/checkout@v2
+        with:
+          repository: ${{ matrix.repo-owner }}/${{ matrix.repo-name }}
+          path: ${{ matrix.repo-name }}
+
+      - name: srcinfo
+        uses: ./action
+        with:
+          target: srcinfo
+          pkgname: ${{ matrix.repo-name }}/${{ matrix.pkg-name }}
+
+      - name: pkgbuild
+        uses: ./action
+        with:
+          target: pkgbuild
+          pkgname: ${{ matrix.repo-name }}/${{ matrix.pkg-name }}

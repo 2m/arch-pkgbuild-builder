@@ -49,6 +49,7 @@ pkgname="$(basename "$pkgbuild_dir")" # keep quotes in case someone passes in a 
 install_deps() {
     # install make and regular package dependencies
     grep -E 'depends|makedepends' PKGBUILD | \
+        grep -v optdepends | \
         sed -e 's/.*depends=//' -e 's/ /\n/g' | \
         tr -d "'" | tr -d "(" | tr -d ")" | \
         xargs yay -S --noconfirm
@@ -73,7 +74,7 @@ case $target in
         eval "$command"
         ;;
     srcinfo)
-        makepkg --printsrcinfo | diff .SRCINFO - || \
+        makepkg --printsrcinfo | diff --ignore-blank-lines .SRCINFO - || \
             { echo ".SRCINFO is out of sync. Please run 'makepkg --printsrcinfo' and commit the changes."; false; }
         ;;
     *)

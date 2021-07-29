@@ -17,17 +17,22 @@ command=$3
 # of the same name as "pkgname", so this works well
 # with "aurpublish" tool
 
-if [[ ! -d $pkgname ]]; then
-    echo "$pkgname should be a directory."
-    exit 1
-fi
-
-if [[ ! -e $pkgname/PKGBUILD ]]; then
-    echo "$pkgname does not contain a PKGBUILD file."
-    exit 1
-fi
-
 pkgbuild_dir=$(readlink "$pkgname" -f) # nicely cleans up path, ie. ///dsq/dqsdsq/my-package//// -> /dsq/dqsdsq/my-package
+
+if [[ ! -d $pkgbuild_dir ]]; then
+    echo "$pkgbuild_dir should be a directory."
+    exit 1
+fi
+
+if [[ ! -e $pkgbuild_dir/PKGBUILD ]]; then
+    echo "$pkgbuild_dir does not contain a PKGBUILD file."
+    exit 1
+fi
+
+if [[ ! -e $pkgbuild_dir/.SRCINFO ]]; then
+    echo "$pkgbuild_dir does not contain a .SRCINFO file."
+    exit 1
+fi
 
 getfacl -p -R "$pkgbuild_dir" /github/home > /tmp/arch-pkgbuild-builder-permissions.bak
 
@@ -44,14 +49,12 @@ echo "keyserver hkp://keyserver.ubuntu.com:80" | tee /github/home/.gnupg/gpg.con
 
 cd "$pkgbuild_dir"
 
-pkgname="$(basename "$pkgbuild_dir")" # keep quotes in case someone passes in a directory path with whitespaces...
+pkgname=$(grep -E 'pkgname' .SRCINFO | sed -e 's/.*= //')
 
 install_deps() {
-    # install make and regular package dependencies
-    grep -E 'depends|makedepends' PKGBUILD | \
-        grep -v optdepends | \
-        sed -e 's/.*depends=//' -e 's/ /\n/g' | \
-        tr -d "'" | tr -d "(" | tr -d ")" | \
+    # install all package dependencies
+    grep -E 'depends' .SRCINFO | \
+        sed -e 's/.*depends = //' -e 's/:.*//' | \
         xargs yay -S --noconfirm
 }
 
@@ -60,11 +63,11 @@ case $target in
         namcap PKGBUILD
         install_deps
         makepkg --syncdeps --noconfirm
-        namcap "${pkgname}"-*
 
         # shellcheck disable=SC1091
         source /etc/makepkg.conf # get PKGEXT
 
+        namcap "${pkgname}"-*"${PKGEXT}"
         pacman -Qip "${pkgname}"-*"${PKGEXT}"
         pacman -Qlp "${pkgname}"-*"${PKGEXT}"
         ;;

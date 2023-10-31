@@ -58,10 +58,16 @@ install_deps() {
         xargs yay -S --noconfirm --needed
 }
 
+fetch_gpg_keys() {
+    awk '/validpgpkeys/ {print $3}' .SRCINFO | \
+        xargs gpg --keyserver keyserver.ubuntu.com --recv-key
+}
+
 case $target in
     pkgbuild)
         namcap PKGBUILD
         install_deps
+        fetch_gpg_keys
         makepkg --syncdeps --noconfirm
 
         # shellcheck disable=SC1091
@@ -73,6 +79,7 @@ case $target in
         ;;
     run)
         install_deps
+        fetch_gpg_keys
         makepkg --syncdeps --noconfirm --install
         eval "$command"
         ;;

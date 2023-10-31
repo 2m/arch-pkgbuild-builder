@@ -5,8 +5,11 @@ build:
   docker pull martynas/archlinux
   docker build -t arch-pkgbuild-builder .
 
-# run a comment on AUR project, like `just run-on-aur ucm-bin pkgbuild`
-run-on-aur project command:
-  mkdir -p target
-  git -C target/{{project}} pull || git clone https://aur.archlinux.org/{{project}}.git target/{{project}}
-  docker run --rm -v {{pwd}}/target/{{project}}:/home/build -v /tmp/gh:/github/home arch-pkgbuild-builder {{command}} .
+# run a command on a project, like:
+#   just run git@github.com:Marcool04/linux-fix-e1000e.git pkgbuild
+#   just run https://aur.archlinux.org/ucm-bin.git pkgbuild
+run project-uri command:
+  rm -rf target
+  mkdir target
+  git clone {{project-uri}} target
+  docker run --rm -v {{pwd}}/target:/home/build -v /tmp/gh:/github/home arch-pkgbuild-builder {{command}} .

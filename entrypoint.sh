@@ -13,6 +13,8 @@ target=$1
 pkgname=$2
 command=$3
 
+keyserver="hkps://keyserver.ubuntu.com"
+
 # assumes that package files are in a subdirectory
 # of the same name as "pkgname", so this works well
 # with "aurpublish" tool
@@ -45,7 +47,7 @@ sudo chown -R build /github/home
 
 # use more reliable keyserver
 mkdir -p /github/home/.gnupg/
-echo "keyserver hkp://keyserver.ubuntu.com:80" | tee /github/home/.gnupg/gpg.conf
+echo "keyserver $keyserver" | tee /github/home/.gnupg/gpg.conf
 
 cd "$pkgbuild_dir"
 
@@ -60,7 +62,7 @@ install_deps() {
 
 fetch_gpg_keys() {
     awk '/validpgpkeys/ {print $3}' .SRCINFO | \
-        xargs gpg --keyserver keyserver.ubuntu.com --recv-key
+        xargs gpg --keyserver $keyserver --recv-key
 }
 
 case $target in

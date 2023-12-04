@@ -68,7 +68,7 @@ case $target in
         namcap PKGBUILD
         install_deps
         fetch_gpg_keys
-        makepkg --syncdeps --noconfirm
+        CFLAGS="-march=skylake -O2 -pipe -fno-plt -fexceptions -Wp,-D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security -fstack-clash-protection -fcf-protection -ftree-vectorize -flto=auto" MAKEFLAGS="-j${nproc}" COMPRESSZST=(zstd -c -z -q --threads=0 -) makepkg --syncdeps --noconfirm
 
         # shellcheck disable=SC1091
         source /etc/makepkg.conf # get PKGEXT
